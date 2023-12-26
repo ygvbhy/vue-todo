@@ -1,0 +1,11 @@
+<template>
+  <div>Input</div>
+</template>
+
+<script>
+export default {
+  name: "TodoInput",
+};
+</script>
+
+<style lang="scss" scoped></style>
