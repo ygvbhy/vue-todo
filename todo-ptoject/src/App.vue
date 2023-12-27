@@ -2,7 +2,11 @@
   <div id="app">
     <todo-header></todo-header>
     <todo-input @addTodoItem="addOneItem"></todo-input>
-    <todo-list :propsItems="todoItems"></todo-list>
+    <todo-list
+      :propsItems="todoItems"
+      @removeItem="removeOneItem"
+      @toggleComplete="toggleOneItem"
+    ></todo-list>
     <todo-footer></todo-footer>
   </div>
 </template>
@@ -36,6 +40,15 @@ export default {
       let obj = { completed: false, item: todoItem };
       localStorage.setItem(todoItem, JSON.stringify(obj));
       this.todoItems.push(obj);
+    },
+    removeOneItem(todoItem, index) {
+      localStorage.removeItem(todoItem.item);
+      this.todoItems.splice(index, 1);
+    },
+    toggleOneItem(todoItem, index) {
+      this.todoItems[index].completed = !this.todoItems[index].completed;
+      localStorage.removeItem(todoItem.item);
+      localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
     },
   },
   components: {
