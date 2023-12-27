@@ -1,7 +1,7 @@
 <template>
   <div>
     <ul>
-      <li v-for="(todoItem, index) in todoItems" :key="index" class="shadow">
+      <li v-for="(todoItem, index) in propsItems" :key="index" class="shadow">
         <i
           class="checkBtn fas fa-check"
           :class="{ checkBtnCompleted: todoItem.completed }"
@@ -21,21 +21,12 @@
 <script>
 export default {
   name: "TodoList",
-  data() {
-    return {
-      todoItems: [],
-    };
+  props: {
+    propsItems: {
+      type: Array,
+    },
   },
   methods: {
-    getTodoList() {
-      if (localStorage.length > 0) {
-        for (let i = 0; i < localStorage.length; i++) {
-          this.todoItems.push(
-            JSON.parse(localStorage.getItem(localStorage.key(i)))
-          );
-        }
-      }
-    },
     removeTodo(todoItem, index) {
       localStorage.removeItem(todoItem);
       this.todoItems.splice(index, 1);
@@ -46,9 +37,6 @@ export default {
       localStorage.removeItem(todoItem.item);
       localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
     },
-  },
-  created() {
-    this.getTodoList();
   },
 };
 </script>
