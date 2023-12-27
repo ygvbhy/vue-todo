@@ -1,9 +1,16 @@
 <template>
   <div>
     <ul>
-      <li v-for="dotoItem in todoItems" :key="dotoItem" class="shadow">
-        {{ dotoItem }}
-        <span class="removeBtn" @click="removeTodo()">
+      <li v-for="(todoItem, index) in todoItems" :key="index" class="shadow">
+        <i
+          class="checkBtn fas fa-check"
+          :class="{ checkBtnCompleted: todoItem.completed }"
+          @click="toggleComplete(todoItem, index)"
+        ></i>
+        <span :class="{ textCompleted: todoItem.completed }">{{
+          todoItem.item
+        }}</span>
+        <span class="removeBtn" @click="removeTodo(todoItem, index)">
           <i class="fas fa-trash-alt"></i>
         </span>
       </li>
@@ -23,11 +30,22 @@ export default {
     getTodoList() {
       if (localStorage.length > 0) {
         for (let i = 0; i < localStorage.length; i++) {
-          this.todoItems.push(localStorage.key(i));
+          this.todoItems.push(
+            JSON.parse(localStorage.getItem(localStorage.key(i)))
+          );
         }
       }
     },
-    removeTodo() {},
+    removeTodo(todoItem, index) {
+      localStorage.removeItem(todoItem);
+      this.todoItems.splice(index, 1);
+    },
+    toggleComplete(todoItem, index) {
+      console.log(index);
+      todoItem.completed = !todoItem.completed;
+      localStorage.removeItem(todoItem.item);
+      localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
+    },
   },
   created() {
     this.getTodoList();
@@ -56,6 +74,7 @@ li {
   line-height: 45px;
   color: #62acde;
   margin-right: 5px;
+  cursor: pointer;
 }
 .checkBtnCompleted {
   color: #b3adad;
@@ -67,5 +86,6 @@ li {
 .removeBtn {
   margin-left: auto;
   color: #de4343;
+  cursor: pointer;
 }
 </style>
