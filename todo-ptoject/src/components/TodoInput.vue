@@ -5,11 +5,11 @@
       <i class="fas fa-plus addBtn" @click="addTodo()"></i>
     </span>
     <modal-component v-if="showModal" @close="showModal = false">
-      <h3 slot="header">경고!</h3>
+      <h3 slot="header">
+        경고!
+        <i class="fas fa-times closeModalBtn" @click="showModal = false"></i>
+      </h3>
       <span slot="body">빈값은 불가능 합니다.</span>
-      <div slot="footer">
-        <span>copy right</span>
-      </div>
     </modal-component>
   </div>
 </template>
@@ -69,5 +69,8 @@ input:focus {
 .addBtn {
   color: white;
   vertical-align: middle;
+}
+.closeModalBtn {
+  color: #42b983;
 }
 </style>
