@@ -5,11 +5,11 @@
       <i class="fas fa-plus addBtn" @click="addTodo()"></i>
     </span>
     <modal-component v-if="showModal" @close="showModal = false">
-      <!--
-      you can use custom content here to overwrite
-      default content
-    -->
-      <h3 slot="header">custom header</h3>
+      <h3 slot="header">경고!</h3>
+      <span slot="body">빈값은 불가능 합니다.</span>
+      <div slot="footer">
+        <span>copy right</span>
+      </div>
     </modal-component>
   </div>
 </template>
@@ -33,7 +33,7 @@ export default {
         this.$emit("addTodoItem", this.newTodoItem);
         this.clearInput();
       } else {
-        console.log(123);
+        this.showModal = !this.showModal;
       }
     },
     clearInput() {
